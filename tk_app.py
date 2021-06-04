@@ -100,12 +100,6 @@ def app():
     elif platform == "win32":
         style.theme_use('winnative')
 
-    # style.configure('top.TFrame', font='helvetica 12', foreground='red', background='green')
-    # style.configure('bottom.TFrame', font='helvetica 12', foreground='red', background='red')
-    # style.configure('left.TFrame', font='helvetica 12', foreground='red', background='blue')
-    # style.configure('center.TFrame', font='helvetica 12', foreground='red', background='yellow')
-    # style.configure('right.TFrame', font='helvetica 12', foreground='red', background='orange')
-
     top = ttk.Frame(window, width=600, height=30, style='top.TFrame')
     bottom = ttk.Frame(window, width=600, height=300, style='bottom.TFrame')
     top.pack(fill='both', side='top', expand=True, padx=pad, pady=pad)
