@@ -117,8 +117,8 @@ function get_result(data, gate_count, is_deciaml) {
             document.getElementById('invalid_circuit').innerHTML = res.data['message'];
         }
     }).catch(res => {
-        console.log(res.data);
-        document.getElementById('debug').innerHTML = res.data;
+        console.log(res.message);
+        document.getElementById('debug').innerHTML = res.message;
     });
 }
 
