@@ -3,71 +3,83 @@
  */
 
 const url = window.location.protocol + "//" + window.location.host;
+const svgns = "http://www.w3.org/2000/svg";
+
+function draw_0_control(c, x, y) {
+    let circle = document.createElementNS(svgns, 'circle');
+    circle.setAttributeNS(null, 'cx', x);
+    circle.setAttributeNS(null, 'cy', y);
+    circle.setAttributeNS(null, 'r', "5");
+    circle.setAttributeNS(null, 'style', 'fill: #FFFFFF; stroke: #000000; stroke-width: 2px;');
+    c.appendChild(circle);
+}
+
+function draw_1_control(c, x, y) {
+    let circle = document.createElementNS(svgns, 'circle');
+    circle.setAttributeNS(null, 'cx', x);
+    circle.setAttributeNS(null, 'cy', y);
+    circle.setAttributeNS(null, 'r', "5");
+    circle.setAttributeNS(null, 'style', 'fill: #000000; stroke: #000000; stroke-width: 2px;');
+    c.appendChild(circle);
+}
+
+function draw_not_gate(c, x, y) {
+    let circle = document.createElementNS(svgns, 'circle');
+    circle.setAttributeNS(null, 'cx', x);
+    circle.setAttributeNS(null, 'cy', y);
+    circle.setAttributeNS(null, 'r', "10");
+    circle.setAttributeNS(null, 'style', 'fill: #FFFFFF; stroke: #000000; stroke-width: 2px;');
+    c.appendChild(circle);
+    draw_line(c, x, y - 10, x, y + 10);
+    draw_line(c, x - 10, y, x + 10, y);
+}
+
+function draw_line(c, x1, y1, x2, y2, is_dashed) {
+    let line = document.createElementNS(svgns, 'line');
+    line.setAttributeNS(null, 'x1', x1);
+    line.setAttributeNS(null, 'y1', y1);
+    line.setAttributeNS(null, 'x2', x2);
+    line.setAttributeNS(null, 'y2', y2);
+    if (is_dashed) {
+        line.setAttributeNS(null, 'style', 'stroke: #000000; stroke-width: 2px; stroke-dasharray:5,5;');
+    } else {
+        line.setAttributeNS(null, 'style', 'stroke: #000000; stroke-width: 2px;');
+    }
+    c.appendChild(line);
+}
 
 function draw(circuit, wire_count) {
     let rows = circuit.split('\n');
     while (rows[rows.length - 1] == '') {
         rows.pop();
     }
-    let c = document.getElementById("myCanvas");
-    let ctx = c.getContext("2d");
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    ctx.canvas.width = rows.length * 50 + 100;
-    ctx.canvas.height = wire_count * 50;
+    let c = document.getElementById("svg_diagram");
+    c.innerHTML = '';
 
-    ctx.strokeStyle = "#000000";
-    ctx.lineWidth = 2;
+    c.setAttribute("width", rows.length * 50 + 100);
+    c.setAttribute("height", wire_count * 50);
 
-    ctx.beginPath();
     for (let i = 0; i < wire_count; i++) {
         let x = 50, y = 25;
-        ctx.moveTo(x, y + i * 50);
-        ctx.lineTo(x + 50 * rows.length, y + i * 50);
+        draw_line(c, x, y + i * 50, x + 50 * rows.length, y + i * 50);
     }
-    ctx.stroke();
 
     for (let i = 0; i < rows.length; i++) {
         let x = 50 + 50 * i + 20;
-        ctx.beginPath();
         if (rows[i] == '') {
-            console.log('i=' + i + ' ' + rows[i]);
-            ctx.setLineDash([5, 5]);
-            ctx.moveTo(x + 5, 13);
-            ctx.lineTo(x + 5, wire_count * 50 - 10);
+            draw_line(c, x + 5, 13, x + 5, wire_count * 50 - 10, true);
         } else {
-            ctx.setLineDash([]);
-            ctx.moveTo(x + 5, 25);
-            ctx.lineTo(x + 5, wire_count * 50 - 25);
+            draw_line(c, x + 5, 25, x + 5, wire_count * 50 - 25, false);
         }
-        ctx.stroke();
         for (let j = 0; j < wire_count; j++) {
             let y = 20 + j * 50;
-            ctx.beginPath();
             if (rows[i][j] == '0') {
-                ctx.fillStyle = '#FFFFFF';
-                ctx.strokeStyle = "#000000";
-                ctx.arc(x + 5, y + 5, 5, 0, 2 * Math.PI);
-                ctx.fill();
-                ctx.stroke();
+                draw_0_control(c, x + 5, y + 5);
             } else if (rows[i][j] == '1') {
-                ctx.fillStyle = '#000000';
-                ctx.arc(x + 5, y + 5, 5, 0, 2 * Math.PI);
-                ctx.fill();
+                draw_1_control(c, x + 5, y + 5);
             } else if (rows[i][j] == '2') {
-                let _x = x - 5;
-                let _y = y - 5;
-                ctx.fillStyle = '#FFFFFF';
-                ctx.strokeStyle = "#000000";
-                ctx.arc(x + 5, y + 5, 10, 0, 2 * Math.PI);
-                ctx.fill();
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(_x, _y + 10);
-                ctx.lineTo(_x + 20, _y + 10);
-                ctx.moveTo(_x + 10, _y);
-                ctx.lineTo(_x + 10, _y + 20);
-                ctx.stroke();
+                draw_not_gate(c, x + 5, y + 5);
             }
         }
     }
@@ -149,10 +161,8 @@ function reset(clr_input) {
     document.getElementById('info').innerHTML = 'Gate count: ';
     document.getElementById('truth_table').value = '';
     document.getElementById('invalid_circuit').innerHTML = '';
-    let c = document.getElementById("myCanvas");
-    let ctx = c.getContext("2d");
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.canvas.width = 0;
-    ctx.canvas.height = 0;
-    console.log(document.getElementById('truth_table').cols);
+    let c = document.getElementById("svg_diagram");
+    c.innerHTML = '';
+    c.setAttribute("width", 0);
+    c.setAttribute("height", 0);
 }
