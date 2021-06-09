@@ -74,7 +74,7 @@ function draw(circuit, wire_count) {
 function get_result(data, gate_count) {
     axios({
         method: 'post',
-        url: 'http://127.0.0.1:5000/start',
+        url: 'https://reversible-circuit.herokuapp.com/start',
         data: {
             circuit: data
         }
