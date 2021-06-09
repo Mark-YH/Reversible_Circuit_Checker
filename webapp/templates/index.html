@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Reversible circuit validation">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/quantum.svg') }}">
+    <title>Reversible circuit checker</title>
+</head>
+<body>
+<div class="container">
+    <div class="row text-center">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <table class="table">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Input</th>
+                    <th scope="col">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="col">0</th>
+                    <th scope="col">White control</th>
+                </tr>
+                <tr>
+                    <th scope="col">1</th>
+                    <th scope="col">Black control</th>
+                </tr>
+                <tr>
+                    <th scope="col">2</th>
+                    <th scope="col">NOT-gate<br>Note that each line must contain exact one NOT-gate.</th>
+                </tr>
+                <tr>
+                    <th scope="col">3</th>
+                    <th scope="col">Wire gate</th>
+                </tr>
+                <tr>
+                    <th scope="col">Empty line</th>
+                    <th scope="col">Barrier</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-6 bg-light border rounded border-dark">
+            <div class="row text-center"><label for="circuit" class="form-label">Circuit</label></div>
+            <div class="row"><textarea id="circuit" name="circuit" rows="17" cols="auto" autofocus
+                                       placeholder="Input your circuit"></textarea></div>
+        </div>
+        <div class="col-6 bg-light border rounded border-dark text-center">
+            <label for="truth_table" class="form-label">Truth table</label>
+            <div class="row"><textarea id="truth_table" name="truthTable" rows="17" cols="auto" readonly></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <button class="btn btn-primary" onclick="run()">Run</button>
+            <button class="btn btn-danger" onclick="reset(true)">Clear</button>
+        </div>
+    </div>
+    <div class="row text-center" style="color: red;"><p id="invalid_circuit"></p></div>
+    <div class="row text-center"><p id="info">Gate count:</p></div>
+    <div class="row">
+        <div class="col-12 bg-light border rounded border-dark text-center" id="canvasFrame"
+             style="overflow: scroll;">
+            <canvas id="myCanvas" width=0px height=0px style="background:#FFFFFF;"></canvas>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

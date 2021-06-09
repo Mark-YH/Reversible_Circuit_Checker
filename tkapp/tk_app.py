@@ -5,10 +5,11 @@ Created on 2021/6/4
 @author: Mark Hsu
 """
 
-from tkinter import ttk
 import tkinter as tk
 from sys import platform
-from checker import Circuit
+from tkinter import ttk
+
+from webapp.lib.circuit import Circuit
 
 
 def layout_config(obj, column=0, row=0, col_minsize=None, row_minsize=None):
