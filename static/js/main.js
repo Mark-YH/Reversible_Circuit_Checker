@@ -105,6 +105,7 @@ function get_result(data, gate_count) {
             document.getElementById('truth_table').value = text;
             document.getElementById('info').innerHTML = 'Gate count: ' + gate_count;
             document.getElementById('invalid_circuit').innerHTML = '';
+            document.getElementById("btn_save").removeAttribute("disabled");
             draw(data, Math.log2(in_table.length));
         } else {
             document.getElementById('invalid_circuit').innerHTML = res.data['message'];
@@ -165,4 +166,9 @@ function reset(clr_input) {
     c.innerHTML = '';
     c.setAttribute("width", 0);
     c.setAttribute("height", 0);
+    document.getElementById("btn_save").setAttribute("disabled", "");
 }
+
+document.querySelector("#btn_save").onclick = function () {
+    svgExport.downloadPng(document.querySelector("#svg_diagram"), "circuit diagram");
+};
