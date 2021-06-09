@@ -2,7 +2,7 @@
  * Created by Mark on 2021/6/5.
  */
 
-const url = 'https://reversible-circuit.herokuapp.com';
+const url = window.location.protocol + "//" + window.location.host;
 
 function draw(circuit, wire_count) {
     let rows = circuit.split('\n');
