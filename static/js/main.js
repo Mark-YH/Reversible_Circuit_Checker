@@ -2,6 +2,8 @@
  * Created by Mark on 2021/6/5.
  */
 
+const url = 'https://reversible-circuit.herokuapp.com';
+
 function draw(circuit, wire_count) {
     let rows = circuit.split('\n');
     while (rows[rows.length - 1] == '') {
@@ -74,7 +76,7 @@ function draw(circuit, wire_count) {
 function get_result(data, gate_count) {
     axios({
         method: 'post',
-        url: 'https://reversible-circuit.herokuapp.com/start',
+        url: url + '/start',
         data: {
             circuit: data
         }
@@ -97,6 +99,7 @@ function get_result(data, gate_count) {
         }
     }).catch(res => {
         console.log(res.data);
+        document.getElementById('debug').innerHTML = res.data;
     });
 }
 

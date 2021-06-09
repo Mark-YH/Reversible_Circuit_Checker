@@ -10,10 +10,15 @@
     <title>Reversible circuit checker</title>
 </head>
 <body>
-<div class="container">
+<div class="container mt-3">
     <div class="row text-center">
-        <div class="col-3"></div>
-        <div class="col-6">
+        <div class="col-3">
+            <div class="row text-center bg-light border rounded border-dark"><label for="circuit" class="form-label">Circuit</label>
+            </div>
+            <div class="row h-75"><textarea id="circuit" name="circuit" autofocus wrap="off"
+                                            placeholder="Input your circuit"></textarea></div>
+        </div>
+        <div class="col mr-2">
             <table class="table">
                 <thead class="table-light">
                 <tr>
@@ -24,15 +29,15 @@
                 <tbody>
                 <tr>
                     <th scope="col">0</th>
-                    <th scope="col">White control</th>
+                    <th scope="col">Control bit (low level trigger)</th>
                 </tr>
                 <tr>
                     <th scope="col">1</th>
-                    <th scope="col">Black control</th>
+                    <th scope="col">Control bit (high level trigger)</th>
                 </tr>
                 <tr>
                     <th scope="col">2</th>
-                    <th scope="col">NOT-gate<br>Note that each line must contain exact one NOT-gate.</th>
+                    <th scope="col">NOT-gate<br>Note that each line must contain exactly one NOT-gate.</th>
                 </tr>
                 <tr>
                     <th scope="col">3</th>
@@ -45,19 +50,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row">
-        <div class="col-6 bg-light border rounded border-dark">
-            <div class="row text-center"><label for="circuit" class="form-label">Circuit</label></div>
-            <div class="row"><textarea id="circuit" name="circuit" rows="17" cols="auto" autofocus
-                                       placeholder="Input your circuit"></textarea></div>
-        </div>
-        <div class="col-6 bg-light border rounded border-dark text-center">
-            <label for="truth_table" class="form-label">Truth table</label>
-            <div class="row"><textarea id="truth_table" name="truthTable" rows="17" cols="auto" readonly></textarea>
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="col text-center">
@@ -68,11 +60,17 @@
     <div class="row text-center" style="color: red;"><p id="invalid_circuit"></p></div>
     <div class="row text-center"><p id="info">Gate count:</p></div>
     <div class="row">
-        <div class="col-12 bg-light border rounded border-dark text-center" id="canvasFrame"
-             style="overflow: scroll;">
+        <div class="col-4 bg-light border rounded border-dark text-center">
+            <div class="row"><label for="truth_table" class="form-label">Truth table</label></div>
+            <div class="row"><textarea id="truth_table" name="truthTable" rows="17" cols="auto" readonly></textarea>
+            </div>
+        </div>
+        <div class="col-8 bg-light border rounded border-dark text-center" style="overflow: scroll;" id="canvasFrame">
+            <div class="row text-center"><label for="myCanvas" class="form-label">Circuit diagram</label></div>
             <canvas id="myCanvas" width=0px height=0px style="background:#FFFFFF;"></canvas>
         </div>
     </div>
+    <div class="row"><p id="debug"></p></div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
         integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
