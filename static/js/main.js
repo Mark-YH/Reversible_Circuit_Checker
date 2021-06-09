@@ -85,7 +85,7 @@ function draw(circuit, wire_count) {
     }
 }
 
-function get_result(data, gate_count) {
+function get_result(data, gate_count, is_deciaml) {
     axios({
         method: 'post',
         url: url + '/start',
@@ -98,8 +98,14 @@ function get_result(data, gate_count) {
             let out_table = res.data['data']['output'];
             let text = '';
 
-            for (let i = 0; i < in_table.length; i++) {
-                text = text + in_table[i] + ' -> ' + out_table[i] + '\n';
+            if (is_deciaml) {
+                for (let i = 0; i < in_table.length; i++) {
+                    text = text + parseInt(in_table[i], 2) + ' -> ' + parseInt(out_table[i], 2) + '\n';
+                }
+            } else {
+                for (let i = 0; i < in_table.length; i++) {
+                    text = text + in_table[i] + ' -> ' + out_table[i] + '\n';
+                }
             }
 
             document.getElementById('truth_table').value = text;
@@ -116,7 +122,7 @@ function get_result(data, gate_count) {
     });
 }
 
-function run() {
+function run(is_decimal) {
     let data = document.getElementById('circuit').value;
     data += '\n';
     data = data.replace(/ /g, '');
@@ -144,7 +150,7 @@ function run() {
             }
         }
         if (is_valid) {
-            get_result(data, gate_count);
+            get_result(data, gate_count, is_decimal);
         } else {
             reset(false);
             document.getElementById('invalid_circuit').innerHTML = 'Illegal input';
