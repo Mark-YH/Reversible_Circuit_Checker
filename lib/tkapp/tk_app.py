@@ -9,7 +9,7 @@ import tkinter as tk
 from sys import platform
 from tkinter import ttk
 
-from webapp.lib.circuit import Circuit
+from lib.circuit import Circuit
 
 
 def layout_config(obj, column=0, row=0, col_minsize=None, row_minsize=None):
