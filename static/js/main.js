@@ -153,14 +153,3 @@ function reset(clr_input) {
     ctx.canvas.height = 0;
     console.log(document.getElementById('truth_table').cols);
 }
-
-const resize_truth_table = new ResizeObserver(function (entries) {
-    document.getElementById('circuit').style.height = document.getElementById('truth_table').style.height;
-});
-
-const resize_circuit = new ResizeObserver(function (entries) {
-    document.getElementById('truth_table').style.height = document.getElementById('circuit').style.height;
-});
-
-resize_truth_table.observe(document.getElementById('truth_table'));
-resize_circuit.observe(document.getElementById('circuit'));
